@@ -24,12 +24,13 @@ export class UserService {
 
   async find(createUserDto: CreateUserDto) {
     try {
-      const verify = await this.UserModel.find({ email: createUserDto.email });
-      if(verify) {
-        return {verificado: verify, registered: true}
-      } else {
+      const verify = await this.UserModel.findOne({ email: createUserDto.email });
+      console.log('teste', verify)
+      if(!verify) {
         return {verificado: verify, registered: false}
       }
+
+      return {verificado: verify, registered: true}
     } catch (error) {
       console.log('Erro detalhado', error);
       throw error;
